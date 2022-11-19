@@ -1,6 +1,9 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function Make() {
+    const navigate = useNavigate();
+
     const input = useRef([]);
     const [nameInput, setNameInput] = useState('');
     const [idInput, setIdInput] = useState('');
@@ -38,7 +41,6 @@ function Make() {
     const handleUserConfirmPassword = (e) => {
         setConfirmPasswordInput(e.target.value)
         input.current[3].focus();
-
         if(e.target.value.length !== 0) {
             if(passwordInput === e.target.value) {
                 setPasswordMessage("맞다")
@@ -107,7 +109,8 @@ function Make() {
                         </div>
                     </form>
                     <button type="submit" className='w-11/12 h-12 bg-blue-300 mx-auto rounded-lg flex justify-center items-center hover:bg-blue-500 duration-200 disabled:bg-slate-400' 
-                            disabled={(nameInput !== 0 && idMessage !== false && passwordConfirm !== false && passwordMessage === "맞다") ? false : true}>
+                            disabled={(nameInput !== 0 && idMessage !== false && passwordConfirm !== false && passwordMessage === "맞다") ? false : true}
+                            onClick={() => navigate(-1)}>
                         <p className='text-white text-lg font-medium'>가입 완료</p>
                     </button>
                 </div>
