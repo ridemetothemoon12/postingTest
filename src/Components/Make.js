@@ -1,9 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
-function Make() {
+import { auth } from '../Firebase';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+  } from 'firebase/auth' 
+  
+  function Make() {
     const navigate = useNavigate();
-
+    
     const input = useRef([]);
     const [nameInput, setNameInput] = useState('');
     const [idInput, setIdInput] = useState('');
@@ -53,12 +58,16 @@ function Make() {
             setPasswordMessage("")
         }
     }
+    const handleOnSubmit = async (e) => {
+        e.preventDefault();
+        await createUserWithEmailAndPassword(auth, idInput, confirmPasswordInput)
+    }
     return (
         <>
             <div className='w-full h-screen bg-slate-300 flex justify-center items-center'>
                 <div className='w-1/4 h-3/4 bg-white rounded-lg'>
                     <h3 className='text-3xl my-3 mx-3 text-slate-500'>회원 가입</h3>
-                    <form>
+                    <form onSubmit={handleOnSubmit}>
                         <div className='w-[90%] h-24 mx-auto my-10 relative'>
                             <p className={`${((nameInput.length !== 0) ? 'top-[-10%] text-orange-500 text-xs' : 'top-3')} text-slate-500 absolute duration-200 left-1`}>이름</p>
                             <input 
@@ -77,6 +86,7 @@ function Make() {
                                 name='id' 
                                 ref={(e) => (input.current[1] = e)} 
                                 onChange={handleUserId} 
+                                value={ idInput }
                                 className='w-full h-[50%] focus:outline-none border-b-[1px] border-slate-300'>
                             </input>
                             {
@@ -103,16 +113,17 @@ function Make() {
                                 name='password' 
                                 ref={(e) => (input.current[3] = e)} 
                                 onChange={handleUserConfirmPassword} 
+                                value={ confirmPasswordInput }
                                 className='w-full h-[50%] focus:outline-none border-b-[1px] border-slate-300'>
                             </input>
                             <p className='text-slate-500 text-sm'>{passwordMessage}</p>
                         </div>
+                        <button type="submit" className='w-11/12 h-12 bg-blue-300 mx-auto rounded-lg flex justify-center items-center hover:bg-blue-500 duration-200 disabled:bg-slate-400' 
+                                disabled={(nameInput !== 0 && idMessage !== false && passwordConfirm !== false && passwordMessage === "맞다") ? false : true}
+                                onClick={() => navigate(-1)}>
+                            <p className='text-white text-lg font-medium'>가입 완료</p>
+                        </button>
                     </form>
-                    <button type="submit" className='w-11/12 h-12 bg-blue-300 mx-auto rounded-lg flex justify-center items-center hover:bg-blue-500 duration-200 disabled:bg-slate-400' 
-                            disabled={(nameInput !== 0 && idMessage !== false && passwordConfirm !== false && passwordMessage === "맞다") ? false : true}
-                            onClick={() => navigate(-1)}>
-                        <p className='text-white text-lg font-medium'>가입 완료</p>
-                    </button>
                 </div>
             </div>
         </>
