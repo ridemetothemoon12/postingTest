@@ -1,11 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-  } from 'firebase/auth' 
-  
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+
   function Make() {
     const navigate = useNavigate();
     
