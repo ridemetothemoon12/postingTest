@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 
   function Make() {
     const navigate = useNavigate();
@@ -57,14 +57,15 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
     }
     const handleOnSubmit = async (e) => {
         e.preventDefault();
-        await createUserWithEmailAndPassword(auth, idInput, confirmPasswordInput)
-    }
+        await createUserWithEmailAndPassword(auth, idInput, confirmPasswordInput);
+        await updateProfile(auth.currentUser, {displayName: nameInput})
+    }  
     return (
         <>
             <div className='w-full h-screen bg-slate-300 flex justify-center items-center'>
                 <div className='w-1/4 h-3/4 bg-white rounded-lg'>
                     <h3 className='text-3xl my-3 mx-3 text-slate-500'>회원 가입</h3>
-                    <form onSubmit={handleOnSubmit}>
+                    <form onSubmit={(e) => handleOnSubmit(e)}>
                         <div className='w-[90%] h-24 mx-auto my-10 relative'>
                             <p className={`${((nameInput.length !== 0) ? 'top-[-10%] text-orange-500 text-xs' : 'top-3')} text-slate-500 absolute duration-200 left-1`}>이름</p>
                             <input 

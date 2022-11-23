@@ -20,11 +20,13 @@ function Login() {
             const user = userCredential.user;
             console.log(user);
             console.log("login success!")
+            console.log(user.email)
+            console.log(user.displayName)
+            navigate(`/user`)
         })
         .catch((error) => {
             console.log(error.message);
             console.log("login fail!")
-
         })
     }
 
