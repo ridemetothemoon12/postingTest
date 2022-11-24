@@ -5,6 +5,7 @@ import Nav from './Components/Nav';
 import Login from './Components/Login';
 import Make from './Components/Make';
 import User from './Components/User';
+import Write from './Components/Write';
 
 
 
@@ -17,6 +18,7 @@ function App() {
           <Route path='/' element={<Login />}/>
           <Route path='/make' element={<Make />}/>
           <Route path='/user' element={<User />}/>
+          <Route path='/user/write' element={<Write />}/>
         </Routes>
     </>
   );
